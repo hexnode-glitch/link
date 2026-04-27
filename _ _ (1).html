@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>الزامل العقارية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0A0E24;          /* كحلي عميق */
+    --ink-2: #131938;        /* كحلي ثاني */
+    --ink-3: #1B2244;        /* كحلي رفع */
+    --gold: #C9A24B;         /* ذهبي نحاسي */
+    --gold-soft: #D8B86B;
+    --gold-deep: #8C6D2A;
+    --cream: #F5F1EA;        /* كريمي دافئ */
+    --cream-2: #ECE6DB;
+    --paper: #FBF8F2;
+    --line: rgba(201,162,75,0.22);
+    --line-dark: rgba(255,255,255,0.08);
+    --muted: #8B90A8;
+    --muted-cream: #6E6A5E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { background: var(--ink); }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    color: #EDEAE2;
+    direction: rtl;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--gold); color: var(--ink); }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-deep); }
+
+  /* ========= CUSTOM CURSOR (disabled) ========= */
+  .cursor-dot, .cursor-ring { display: none !important; }
+
+  /* ========= TYPE SYSTEM ========= */
+  .display {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .serif-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .mono-num {
+    font-family: 'Inter', sans-serif;
+    font-feature-settings: "tnum" on, "lnum" on;
+  }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .eyebrow.dark { color: var(--gold-deep); }
+
+  /* ========= LAYOUT ========= */
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+  @media (max-width: 800px) {
+    .container { padding: 0 24px; }
+  }
+
+  /* ========= HEADER ========= */
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 64px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+    background: rgba(10,14,36,0.0);
+    transition: background .4s ease, padding .4s ease, border-color .4s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .top-bar.scrolled {
+    background: rgba(10,14,36,0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 14px 64px;
+    border-bottom-color: var(--line-dark);
+  }
+  @media (max-width: 800px) {
+    .top-bar, .top-bar.scrolled { padding-left: 24px; padding-right: 24px; }
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .brand-mark {
+    width: 42px; height: 42px;
+    border: 1px solid var(--gold);
+    display: grid; place-items: center;
+    color: var(--gold);
+    font-family: 'Cairo', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    flex-shrink: 0;
+  }
+  .brand-text { line-height: 1.15; }
+  .brand-text .ar {
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F0EDE5;
+  }
+  .brand-text .sub {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 36px;
+    justify-content: center;
+  }
+  .nav a {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #D9D5C9;
+    text-decoration: none;
+    position: relative;
+    transition: color .25s;
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; right: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width .3s ease;
+  }
+  .nav a:hover { color: var(--gold-soft); }
+  .nav a:hover::after { width: 100%; }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    justify-content: flex-end;
+  }
+  .clock {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+  }
+  .clock span { color: rgba(201,162,75,0.5); margin: 0 6px; }
+  @media (max-width: 1100px) { #clock { display: none; } }
+
+  .header-cta {
+    padding: 11px 22px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: all .25s;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .header-cta:hover { background: var(--gold); color: var(--ink); }
+
+  .menu-btn {
+    display: none;
+    width: 42px; height: 42px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  @media (max-width: 900px) {
+    .nav { display: none; }
+    .menu-btn { display: flex; }
+    .header-cta { display: none; }
+  }
+
+  /* ========= HERO ========= */
+  .hero {
+    min-height: 100vh;
+    padding: 130px 0 80px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 90% 60% at 80% 20%, rgba(201,162,75,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 90%, rgba(201,162,75,0.04) 0%, transparent 60%),
+      var(--ink);
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,162,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,75,0.04) 1px, transparent 1px);
+    background-size: 96px 96px;
+    background-position: center;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 90%);
+  }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    padding: 14px 0;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+  .hero-meta .est { color: var(--gold); }
+
+  .hero-headline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .hero-headline h1 {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(56px, 11vw, 168px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: #F0EDE5;
+  }
+  .hero-headline h1 .gold { color: var(--gold); }
+  .hero-headline h1 .outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--gold);
+    font-style: normal;
+  }
+  .hero-headline .serif-line {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(18px, 2vw, 26px);
+    color: var(--gold-soft);
+    font-weight: 400;
+    margin-top: 18px;
+    letter-spacing: 0;
+  }
+
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: end;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-dark);
+  }
+  @media (max-width: 900px) {
+    .hero-row { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .hero-lead {
+    font-size: 17px;
+    color: #C5C2B7;
+    line-height: 1.85;
+    max-width: 540px;
+  }
+  .hero-lead strong { color: var(--gold-soft); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .hero-actions .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Tajawal', sans-serif;
+    padding: 16px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: none;
+  }
+  .btn-fill {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-fill:hover { background: var(--gold-soft); transform: translateY(-2px); }
+  .btn-line {
+    background: transparent;
+    color: #EDEAE2;
+    border: 1px solid var(--line-dark);
+  }
+  .btn-line:hover { border-color: var(--gold); color: var(--gold); }
+  .btn .arrow { font-size: 16px; transform: scaleX(-1); }
+
+  .hero-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .hero-numbers .n .v {
+    font-family: 'Cairo', sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-numbers .n .l {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px; left: 64px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+  }
+  .scroll-hint .line {
+    width: 40px; height: 1px; background: var(--gold);
+    animation: scrollLine 2.4s ease-in-out infinite;
+    transform-origin: right;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleX(0.3); }
+    50% { transform: scaleX(1); }
+  }
+  @media (max-width: 800px) { .scroll-hint { left: 24px; } }
+
+  /* ========= GENERIC SECTIONS ========= */
+  section.block { padding: 130px 0; position: relative; }
+  @media (max-width: 800px) { section.block { padding: 80px 0; } }
+
+  .cream { background: var(--cream); color: var(--ink); }
+  .cream .muted { color: var(--muted-cream); }
+
+  .ink { background: var(--ink); color: #EDEAE2; }
+  .ink .muted { color: var(--muted); }
+
+  .ink-2 { background: var(--ink-2); }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 50px; }
+  }
+  .section-head .left .num {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
+  }
+  .section-head .left h2 {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .section-head .left h2 .gold-text { color: var(--gold); }
+  .section-head .left h2 .serif-it {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .section-head .right p {
+    font-size: 16px;
+    line-height: 1.85;
+    max-width: 520px;
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  /* ========= ABOUT EDITORIAL ========= */
+  .about-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .about-editorial { grid-template-columns: 1fr; gap: 50px; } }
+
+  .about-quote {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--ink);
+    border-right: 2px solid var(--gold);
+    padding-right: 28px;
+  }
+  .about-quote .gold-text { color: var(--gold-deep); }
+
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    color: #2A2E3F;
+    font-size: 15.5px;
+    line-height: 1.95;
+  }
+  .about-signature {
+    margin-top: 14px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(10,14,36,0.12);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .about-signature .sig {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .about-signature .sig-meta {
+    font-size: 11px;
+    color: var(--muted-cream);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* About — values strip */
+  .values-strip {
+    margin-top: 90px;
+    border-top: 1px solid rgba(10,14,36,0.12);
+    border-bottom: 1px solid rgba(10,14,36,0.12);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: 900px) { .values-strip { grid-template-columns: repeat(2, 1fr); } }
+  .value-cell {
+    padding: 36px 24px;
+    border-left: 1px solid rgba(10,14,36,0.08);
+    transition: background .3s;
+  }
+  .value-cell:last-child { border-left: none; }
+  .value-cell:hover { background: rgba(201,162,75,0.06); }
+  .value-cell .vn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--gold-deep);
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
+  }
+  .value-cell h4 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .value-cell p {
+    font-size: 13px;
+    color: var(--muted-cream);
+    line-height: 1.7;
+  }
+
+  /* ========= WHY (ink) ========= */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line-dark);
+    border-right: 1px solid var(--line-dark);
+  }
+  @media (max-width: 900px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-item {
+    padding: 50px 36px 44px;
+    border-bottom: 1px solid var(--line-dark);
+    border-left: 1px solid var(--line-dark);
+    position: relative;
+    transition: background .3s;
+  }
+  .why-item:hover { background: rgba(201,162,75,0.04); }
+  .why-item .why-num {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+  .why-item h3 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #F0EDE5;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .why-item p {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: #A8ADBE;
+  }
+
+  /* ========= SERVICES ========= */
+  .services-list {
+    border-top: 1px solid rgba(10,14,36,0.14);
+  }
+  .service-row {
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr auto;
+    gap: 40px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(10,14,36,0.14);
+    align-items: center;
+    cursor: pointer;
+    transition: background .3s, padding .3s;
+  }
+  .service-row:hover { background: rgba(201,162,75,0.07); padding-right: 16px; padding-left: 16px; }
+  @media (max-width: 800px) {
+    .service-row { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+    .service-row:hover { padding: 28px 12px; }
+  }
+  .service-row .sr-num {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--gold);
+  }
+  .service-row .sr-title {
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .service-row .sr-desc {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--muted-cream);
+  }
+  .service-row .sr-arrow {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(10,14,36,0.2);
+    display: grid; place-items: center;
+    color: var(--ink);
+    font-size: 18px;
+    transition: all .3s;
+  }
+  .service-row:hover .sr-arrow {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+    transform: translateX(-6px);
+  }
+
+  /* ========= PRODUCTS ========= */
+  .products-tabs {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid var(--line-dark);
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+  .ptab {
+    padding: 14px 22px;
+    background: transparent;
+    border: none;
+    color: #C5C2B7;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: color .25s;
+  }
+  .ptab .count {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    margin-right: 6px;
+    vertical-align: super;
+  }
+  .ptab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width .3s;
+  }
+  .ptab:hover { color: var(--gold-soft); }
+  .ptab.active { color: var(--gold); }
+  .ptab.active::after { width: 100%; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 1000px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .products-grid { grid-template-columns: 1fr; } }
+
+  .product-card {
+    background: var(--ink-2);
+    border: 1px solid var(--line-dark);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all .35s;
+    position: relative;
+  }
+  .product-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .product-card .visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--ink-3), var(--ink-2));
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .product-card .visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(135deg, transparent 48%, rgba(201,162,75,0.08) 49%, rgba(201,162,75,0.08) 51%, transparent 52%);
+    background-size: 14px 14px;
+  }
+  .product-card .visual .ph-label {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    background: rgba(10,14,36,0.7);
+    padding: 4px 10px;
+    border: 1px solid var(--line-dark);
+  }
+  .product-card .visual .glyph {
+    position: absolute;
+    inset: 0;
+    display: grid; place-items: center;
+    color: rgba(201,162,75,0.35);
+  }
+  .product-card .badge-row {
+    position: absolute;
+    top: 14px; right: 14px;
+    display: flex; gap: 6px;
+  }
+  .badge {
+    padding: 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(10,14,36,0.85);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+  .badge.sale { color: var(--gold); border-color: var(--gold); }
+  .badge.rent { color: #94d2c0; border-color: rgba(148,210,192,0.5); }
+  .badge.new { color: #f0d890; border-color: rgba(240,216,144,0.5); }
+
+  .product-card .body { padding: 24px 22px 22px; flex: 1; display: flex; flex-direction: column; }
+  .product-card .loc {
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .product-card h4 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: #F0EDE5;
+    line-height: 1.35;
+    margin-bottom: 14px;
+  }
+  .product-card .specs {
+    display: flex;
+    gap: 20px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    margin-bottom: 16px;
+  }
+  .product-card .specs .s {
+    font-size: 12px;
+    color: #A8ADBE;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .product-card .specs .s strong { color: #EDEAE2; font-weight: 500; }
+  .product-card .pc-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto;
+  }
+  .product-card .price {
+    font-family: 'Cairo', sans-serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .product-card .price .sub { font-size: 11px; color: var(--muted); margin-right: 4px; font-family: 'Inter', sans-serif; }
+  .product-card .inquire {
+    font-family: 'Tajawal', sans-serif;
+    background: transparent;
+    border: 1px solid rgba(201,162,75,0.4);
+    color: var(--gold);
+    padding: 9px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .25s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .product-card .inquire:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+  .product-card .inquire .arr { transform: scaleX(-1); }
+
+  /* ========= ANNOUNCEMENTS ========= */
+  .ann-rail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(10,14,36,0.14);
+    border-bottom: 1px solid rgba(10,14,36,0.14);
+  }
+  @media (max-width: 900px) { .ann-rail { grid-template-columns: 1fr; } }
+  .ann-cell {
+    padding: 40px 28px;
+    border-left: 1px solid rgba(10,14,36,0.10);
+    transition: background .3s;
+  }
+  .ann-cell:last-child { border-left: none; }
+  .ann-cell:hover { background: rgba(201,162,75,0.06); }
+  .ann-cell .meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 22px;
+  }
+  .ann-cell .date {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--muted-cream);
+    letter-spacing: 0.14em;
+  }
+  .ann-cell .pill {
+    padding: 3px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    border: 1px solid rgba(140,109,42,0.4);
+  }
+  .ann-cell h4 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .ann-cell p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--muted-cream);
+  }
+  .ann-cell .read {
+    margin-top: 22px;
+    font-size: 12px;
+    color: var(--gold-deep);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+
+  /* ========= CONTACT ========= */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 50px; } }
+
+  .contact-side h2 {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 22px;
+  }
+  .contact-side h2 .gold-text { color: var(--gold); }
+  .contact-lead {
+    color: #C5C2B7;
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 40px;
+    max-width: 460px;
+  }
+
+  .contact-list {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--line-dark);
+  }
+  .contact-list .row {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-dark);
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .contact-list .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .contact-list .val {
+    font-size: 15px;
+    color: #EDEAE2;
+  }
+  .contact-list .val.ltr { direction: ltr; text-align: right; font-family: 'Inter', sans-serif; }
+
+  .contact-form {
+    background: var(--ink-2);
+    border: 1px solid var(--line-dark);
+    padding: 44px 40px;
+  }
+  @media (max-width: 600px) { .contact-form { padding: 28px 24px; } }
+  .contact-form h3 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #F0EDE5;
+    margin-bottom: 8px;
+  }
+  .contact-form .sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 28px; line-height: 1.7;
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line-dark);
+    color: #EDEAE2;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    direction: rtl;
+    transition: border-color .25s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(173,170,160,0.4); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 0; } }
+  .form-group select option { background: var(--ink-2); color: #EDEAE2; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 16px;
+    background: var(--gold);
+    border: none;
+    color: var(--ink);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all .25s;
+    display: inline-flex; justify-content: center; align-items: center; gap: 12px;
+  }
+  .submit-btn:hover { background: var(--gold-soft); }
+
+  /* ========= FOOTER ========= */
+  footer {
+    background: #06091B;
+    border-top: 1px solid var(--line-dark);
+    padding: 80px 0 30px;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  @media (max-width: 600px) { .foot-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .foot-brand p { color: var(--muted); font-size: 14px; line-height: 1.85; margin: 18px 0 24px; max-width: 360px; }
+  .foot-col h5 {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+  .foot-col a {
+    display: block;
+    color: #C5C2B7;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 7px 0;
+    transition: color .2s, padding .25s;
+  }
+  .foot-col a:hover { color: var(--gold); padding-right: 6px; }
+  .foot-bottom {
+    border-top: 1px solid var(--line-dark);
+    padding-top: 24px;
+    display: flex; justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.06em;
+  }
+  @media (max-width: 600px) {
+    .foot-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  }
+
+  .socials { display: flex; gap: 8px; }
+  .socials a {
+    width: 38px; height: 38px;
+    border: 1px solid var(--line-dark);
+    color: var(--gold);
+    display: grid; place-items: center;
+    text-decoration: none;
+    transition: all .25s;
+  }
+  .socials a:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+  /* ========= REVEAL ========= */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-rt { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal-rt.visible { opacity: 1; transform: translateY(0); }
+
+  /* ========= INQUIRY MODAL ========= */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(6,9,27,0.78);
+    backdrop-filter: blur(8px);
+    display: none;
+    z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--ink-2);
+    border: 1px solid var(--gold);
+    width: 100%;
+    max-width: 540px;
+    padding: 40px 36px;
+    position: relative;
+  }
+  @media (max-width: 600px) { .modal { padding: 28px 22px; } }
+  .modal .close {
+    position: absolute;
+    top: 14px; left: 14px;
+    width: 36px; height: 36px;
+    background: transparent;
+    border: 1px solid var(--line-dark);
+    color: #EDEAE2;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all .2s;
+  }
+  .modal .close:hover { border-color: var(--gold); color: var(--gold); }
+  .modal h3 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 24px;
+    color: #F0EDE5;
+    margin-bottom: 6px;
+  }
+  .modal .target {
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  /* Body lock */
+  body.modal-open { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<!-- ===== CUSTOM CURSOR ===== -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ===== HEADER ===== -->
+<header class="top-bar" id="topBar">
+  <a href="#" class="brand">
+    <img src="alzamil_logo.png" style="width:48px;height:48px;object-fit:contain;">
+    <div class="brand-text">
+      <div class="ar">الزامل العقارية</div>
+      <div class="sub">منذ ١٩٨٥</div>
+    </div>
+  </a>
+
+  <nav class="nav">
+    <a href="#about" data-hover>عن الشركة</a>
+    <a href="#why" data-hover>لماذا الزامل</a>
+    <a href="#services" data-hover>خدماتنا</a>
+    <a href="#products" data-hover>منتجاتنا</a>
+    <a href="#announcements" data-hover>الإعلانات</a>
+    <a href="#contact" data-hover>تواصل</a>
+  </nav>
+
+  <div class="nav-cta">
+    <div class="clock" id="clock">— <span>•</span> الدمام</div>
+    <a href="#contact" class="header-cta" data-hover>استشارة عقارية</a>
+    <button class="menu-btn" data-hover onclick="toggleMobileMenu()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg></button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
+
+  <div class="container hero-inner">
+    <div class="hero-meta">
+      <span>منذ ١٩٨٥</span>
+      <span class="est">المنطقة الشرقية</span>
+      <span>المملكة العربية السعودية</span>
+    </div>
+
+    <div class="hero-headline">
+      <h1>
+        <span>الزامل</span><br />
+        <span class="gold">العقارية</span>
+      </h1>
+      <div class="serif-line">— نبني الثقة، ونطوّر المستقبل.</div>
+    </div>
+
+    <div class="hero-row">
+      <p class="hero-lead reveal">
+        أربعون عاماً من <strong>الخبرة المتراكمة</strong> في إدارة وتطوير الأصول العقارية بالمنطقة الشرقية.
+        نقدّم نموذجاً مؤسسياً يجمع بين الحوكمة الصارمة والمعرفة العميقة بالسوق المحلي،
+        لنكون الشريك الموثوق لكل مالك ومستثمر.
+      </p>
+
+      <div class="hero-actions reveal">
+        <div class="row">
+          <a href="#products" class="btn btn-fill" data-hover>
+            تصفّح منتجاتنا <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-line" data-hover>
+            استشارة خاصة
+          </a>
+        </div>
+        <div class="hero-numbers">
+          <div class="n">
+            <div class="v"><span data-count="40">0</span>+</div>
+            <div class="l">سنة خبرة</div>
+          </div>
+          <div class="n">
+            <div class="v"><span data-count="500">0</span>+</div>
+            <div class="l">عقار مُدار</div>
+          </div>
+          <div class="n">
+            <div class="v"><span data-count="1200">0</span>+</div>
+            <div class="l">عميل موثّق</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>اسحب للأسفل</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT — CREAM ===== -->
+<section class="block cream" id="about" data-bg="cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="num">٠١ · هويتنا</div>
+        <h2>هويتنا</h2>
+      </div>
+      <div class="right muted">
+        <p>
+          شركة ماجد بن محمد الزامل وشركاه. ننطلق من عمق السوق السعودي لنقدّم
+          نموذجاً استثنائياً في إدارة وتطوير الأصول العقارية — جذور محلية، معايير عالمية.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-editorial">
+      <div class="about-quote reveal">
+        العقار <span class="gold-text">ليس مجرد بناء</span>،
+        بل أصلٌ يحتاج إلى رعاية احترافية لتعظيم عوائده وضمان استدامته.
+      </div>
+
+      <div class="about-body reveal">
+        <p>
+          منذ تأسيسها، حافظت "الزامل العقارية" على نهج هادئ وثابت في تطوير محفظة عقارية متنوعة في الدمام والخبر والمناطق المجاورة. اعتمدنا منذ البداية على الحوكمة المؤسسية والشفافية الكاملة في التعامل مع الملاك والمستأجرين.
+        </p>
+        <p>
+          نؤمن بأن قيمة العقار الحقيقية تظهر مع الزمن، وبأن نموّ محفظة عملائنا هو المقياس الأهم لنجاحنا. لذلك نعمل وفق رؤية طويلة الأمد ترتكز على الجودة قبل السرعة، والصدق قبل الربح.
+        </p>
+        <div class="about-signature">
+          <div>
+            <div class="sig">— ماجد الزامل</div>
+            <div class="sig-meta">المؤسس والرئيس التنفيذي</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-strip">
+      <div class="value-cell reveal">
+        <div class="vn">٠١</div>
+        <h4>المصداقية</h4>
+        <p>وضوح تام في كل تعامل، والتزام بالأنظمة والتشريعات المعتمدة.</p>
+      </div>
+      <div class="value-cell reveal">
+        <div class="vn">٠٢</div>
+        <h4>الحوكمة</h4>
+        <p>أنظمة إدارية صارمة تضمن حقوق جميع الأطراف وتحفظ الثقة.</p>
+      </div>
+      <div class="value-cell reveal">
+        <div class="vn">٠٣</div>
+        <h4>الابتكار</h4>
+        <p>تسخير التقنية لرفع كفاءة الأداء التشغيلي وتحسين تجربة العميل.</p>
+      </div>
+      <div class="value-cell reveal">
+        <div class="vn">٠٤</div>
+        <h4>الجودة</h4>
+        <p>تفانٍ في تقديم الخدمات بأعلى معايير الدقة والاهتمام بالتفاصيل.</p>
+      </div>
+      <div class="value-cell reveal">
+        <div class="vn">٠٥</div>
+        <h4>النمو</h4>
+        <p>تعظيم القيمة الإيجارية والسوقية للأصول التي نديرها باستمرار.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY — INK ===== -->
+<section class="block ink" id="why" data-bg="ink">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="num">٠٢ · لماذا الزامل</div>
+        <h2>ستة أسباب<br />تجعلنا الخيار الأول</h2>
+      </div>
+      <div class="right muted">
+        <p>اخترنا أن نكون قلّة من الشركات التي تجمع بين الجذور المحلية والممارسات المؤسسية. هذه ستة محاور تُلخّص الفرق.</p>
+      </div>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-num">٠١</div>
+        <h3>أربعون عاماً من الخبرة الميدانية</h3>
+        <p>تراكم معرفي عميق بالسوق العقاري في المنطقة الشرقية يمنحنا حدساً تجارياً نادراً ودقّةً في التقييم.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">٠٢</div>
+        <h3>قرارات مبنية على البيانات</h3>
+        <p>تحليلات سوقية دورية وتقارير مالية شفافة — قرار العقار لدينا لا يُترك للحدس وحده.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">٠٣</div>
+        <h3>موقع استراتيجي محوري</h3>
+        <p>نشاطنا متمركز في قلب الاقتصاد السعودي — حيث أرامكو والشركات الكبرى ومحاور النمو الواعدة.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">٠٤</div>
+        <h3>إدارة شفافة واحترافية</h3>
+        <p>تقارير دورية مفصّلة تُبقيك على اطّلاع دائم بكل تفاصيل أملاكك وعوائدها الاستثمارية.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">٠٥</div>
+        <h3>فريق متخصص متكامل</h3>
+        <p>كادر من المختصين في إدارة الأصول والتسويق والقانون والصيانة — جميعهم تحت سقفٍ واحد.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">٠٦</div>
+        <h3>عقود مرنة وتسليم فوري</h3>
+        <p>إجراءات مبسّطة وعقود واضحة الشروط، لتبدأ علاقتك معنا بسلاسة منذ اللحظة الأولى.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES — CREAM ===== -->
+<section class="block cream" id="services" data-bg="cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="num">٠٣ · خدماتنا</div>
+        <h2>حزمة متكاملة<br />من الحلول العقارية</h2>
+      </div>
+      <div class="right muted">
+        <p>كل خدمة مصمّمة بدقّة لتلبية احتياجات الملاك والمستثمرين في السوق السعودي، بمعايير مؤسسية واضحة.</p>
+      </div>
+    </div>
+
+    <div class="services-list">
+      <a href="#contact" class="service-row" data-hover>
+        <div class="sr-num">٠١</div>
+        <div class="sr-title">إدارة الأملاك الاحترافية</div>
+        <div class="sr-desc">تولّي المسؤولية الكاملة عن العقار — من التعاقد الإلكتروني إلى التحصيل المالي وإدارة الصيانة.</div>
+        <div class="sr-arrow"><svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="16" height="16" style="display:inline-block;vertical-align:middle"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9,6 18,6 18,15"/></svg></div>
+      </a>
+      <a href="#contact" class="service-row" data-hover>
+        <div class="sr-num">٠٢</div>
+        <div class="sr-title">التسويق العقاري الذكي</div>
+        <div class="sr-desc">استراتيجيات مدروسة لرفع نسب الإشغال واستهداف المستأجر النوعي بأسرع وقت ممكن.</div>
+        <div class="sr-arrow"><svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="16" height="16" style="display:inline-block;vertical-align:middle"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9,6 18,6 18,15"/></svg></div>
+      </a>
+      <a href="#contact" class="service-row" data-hover>
+        <div class="sr-num">٠٣</div>
+        <div class="sr-title">التطوير والاستثمار</div>
+        <div class="sr-desc">دراسة الأصول وتقديم حلول تطويرية ترفع كفاءتها وجدواها الاقتصادية على المدى البعيد.</div>
+        <div class="sr-arrow"><svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="16" height="16" style="display:inline-block;vertical-align:middle"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9,6 18,6 18,15"/></svg></div>
+      </a>
+      <a href="#contact" class="service-row" data-hover>
+        <div class="sr-num">٠٤</div>
+        <div class="sr-title">الدعم القانوني والإداري</div>
+        <div class="sr-desc">توثيق العقود وأرشفة البيانات رقمياً لضمان بيئة عقارية آمنة ومنظّمة بأعلى المعايير.</div>
+        <div class="sr-arrow"><svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="16" height="16" style="display:inline-block;vertical-align:middle"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9,6 18,6 18,15"/></svg></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS — INK ===== -->
+<section class="block ink" id="products" data-bg="ink">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="num">٠٤ · منتجاتنا</div>
+        <h2>منتجاتنا</h2>
+      </div>
+      <div class="right muted">
+        <p>تشكيلة منتقاة من العقارات تحت إدارتنا — شقق سكنية، عمائر استثمارية، وأراضٍ ذات مواقع استراتيجية. تواصل معنا لطلب التفاصيل الكاملة لأي وحدة.</p>
+      </div>
+    </div>
+
+    <div class="products-tabs" id="productTabs">
+      <button class="ptab active" data-cat="all" data-hover>الكل <span class="count">٠٩</span></button>
+      <button class="ptab" data-cat="apt" data-hover>شقق <span class="count">٠٤</span></button>
+      <button class="ptab" data-cat="bld" data-hover>عمائر <span class="count">٠٣</span></button>
+      <button class="ptab" data-cat="land" data-hover>أراضٍ <span class="count">٠٢</span></button>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== ANNOUNCEMENTS — CREAM ===== -->
+<section class="block cream" id="announcements" data-bg="cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="num">٠٥ · الإعلانات</div>
+        <h2>إعلاناتنا</h2>
+      </div>
+      <div class="right muted">
+        <p>أحدث أخبار الشركة، فرص استثمارية مختارة، وتحديثات السوق العقاري في المنطقة الشرقية.</p>
+      </div>
+    </div>
+
+    <div class="ann-rail">
+      <div class="ann-cell reveal">
+        <div class="meta">
+          <span class="date">١٥ · ٠٤ · ٢٠٢٦</span>
+          <span class="pill">للبيع</span>
+        </div>
+        <h4>أرض تجارية على طريق الملك عبدالعزيز</h4>
+        <p>موقع استراتيجي في قلب الدمام، مساحة 1,200 م²، واجهة تجارية مميزة.</p>
+        <a href="#contact" class="read" data-hover>عرض التفاصيل <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg></a>
+      </div>
+      <div class="ann-cell reveal">
+        <div class="meta">
+          <span class="date">٠٢ · ٠٤ · ٢٠٢٦</span>
+          <span class="pill">للإيجار</span>
+        </div>
+        <h4>مجمع تجاري — حي المريكبات</h4>
+        <p>محلات تجارية بمساحات متنوعة، موقع على طريق عثمان بن عفان مباشرة.</p>
+        <a href="#contact" class="read" data-hover>عرض التفاصيل <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg></a>
+      </div>
+      <div class="ann-cell reveal">
+        <div class="meta">
+          <span class="date">٢٨ · ٠٣ · ٢٠٢٦</span>
+          <span class="pill">جديد</span>
+        </div>
+        <h4>إطلاق منصّة الإدارة الرقمية</h4>
+        <p>منصّة موحّدة لمتابعة عقاراتك ومدفوعاتك وتقاريرك الدورية في مكان واحد.</p>
+        <a href="#contact" class="read" data-hover>اقرأ المزيد <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT — INK ===== -->
+<section class="block ink" id="contact" data-bg="ink">
+  <div class="container contact-grid">
+    <div class="contact-side reveal">
+      <div class="num eyebrow" style="margin-bottom: 22px;">٠٦ · تواصل معنا</div>
+      <h2>نرحب بتواصلكم<br /><span class="gold-text">في أي وقت</span></h2>
+      <p class="contact-lead">
+        فريقنا جاهز للإجابة على استفساراتكم وتقديم المشورة العقارية المتخصصة.
+        تواصل عبر القناة المناسبة لك، أو استخدم النموذج المرفق وسنعاود الاتصال.
+      </p>
+
+      <div class="contact-list">
+        <div class="row">
+          <div class="label">الموقع</div>
+          <div class="val">الدمام · المريكبات · طريق عثمان بن عفان</div>
+        </div>
+        <div class="row">
+          <div class="label">الهاتف</div>
+          <div class="val ltr">013 8126 111 · 013 8155 111</div>
+        </div>
+        <div class="row">
+          <div class="label">واتساب</div>
+          <div class="val ltr"> 050 309 8111</div>
+        </div>
+        <div class="row">
+          <div class="label">البريد</div>
+          <div class="val"><a href="mailto:al.zamil1@hotmail.com">al.zamil1@hotmail.com</a></div>
+        </div>
+        <div class="row">
+          <div class="label">ساعات العمل</div>
+          <div class="val">الأحد — الخميس · ٠٨:٠٠ — ١٧:٠٠</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <h3>أرسل لنا استفسارك</h3>
+      <p class="sub">سيصلك ردّ خلال ساعات العمل — وللاستعجال، تواصل عبر واتساب مباشرة.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>الاسم الكامل</label>
+          <input type="text" id="fname" placeholder="—" />
+        </div>
+        <div class="form-group">
+          <label>رقم الجوال</label>
+          <input type="tel" id="fphone" placeholder="05XXXXXXXX" dir="ltr" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>الخدمة المطلوبة</label>
+        <select id="fservice">
+          <option value="">— اختر —</option>
+          <option>إدارة أملاك</option>
+          <option>تسويق عقاري</option>
+          <option>تطوير واستثمار</option>
+          <option>دعم قانوني</option>
+          <option>استفسار عن منتج</option>
+          <option>استفسار عام</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>رسالتك</label>
+        <textarea id="fmsg" placeholder="—"></textarea>
+      </div>
+
+      <button class="submit-btn" data-hover onclick="sendWhatsApp()">
+        إرسال عبر واتساب
+        <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <img src="alzamil_logo.png" style="width:48px;height:48px;object-fit:contain;">
+          <div class="brand-text">
+            <div class="ar">الزامل العقارية</div>
+            <div class="sub">منذ ١٩٨٥</div>
+          </div>
+        </div>
+        <p>
+          شريكك الموثوق في إدارة وتطوير الأصول العقارية بالمنطقة الشرقية.
+          أربعون عاماً في خدمة الملاك والمستثمرين.
+        </p>
+        <div class="socials">
+          <a href="https://wa.me/966503098111" data-hover target="_blank" aria-label="WhatsApp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.096.536 4.067 1.475 5.782L.057 24l6.305-1.655A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+          <a href="/cdn-cgi/l/email-protection#9cfdf0b2e6fdf1f5f0addcf4f3e8f1fdf5f0b2fff3f1" data-hover aria-label="Email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="0"/><polyline points="3,7 12,13 21,7"/></svg>
+          </a>
+          <a href="tel:0138126111" data-hover aria-label="Phone">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h5>الشركة</h5>
+        <a href="#about" data-hover>عن الزامل</a>
+        <a href="#why" data-hover>لماذا نحن</a>
+        <a href="#announcements" data-hover>الإعلانات</a>
+        <a href="#contact" data-hover>تواصل</a>
+      </div>
+
+      <div class="foot-col">
+        <h5>الخدمات</h5>
+        <a href="#services" data-hover>إدارة الأملاك</a>
+        <a href="#services" data-hover>التسويق العقاري</a>
+        <a href="#services" data-hover>التطوير والاستثمار</a>
+        <a href="#services" data-hover>الدعم القانوني</a>
+      </div>
+
+      <div class="foot-col">
+        <h5>تواصل سريع</h5>
+        <a href="tel:0138126111" data-hover dir="ltr" style="text-align:right">013 8126 111</a>
+        <a href="tel:0503098111" data-hover dir="ltr" style="text-align:right">0503098111</a>
+        <a href="mailto:al.zamil1@hotmail.com">al.zamil1@hotmail.com</a>
+        <a href="#" data-hover>الدمام · المريكبات</a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 شركة ماجد الزامل العقارية — جميع الحقوق محفوظة</span>
+      <span>الدمام · المملكة العربية السعودية</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== INQUIRY MODAL ===== -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="close" data-hover onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="14" height="14"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+    <h3>الاستفسار عن المنتج</h3>
+    <div class="target" id="modalTarget">—</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>الاسم</label>
+        <input type="text" id="mname" placeholder="—" />
+      </div>
+      <div class="form-group">
+        <label>رقم الجوال</label>
+        <input type="tel" id="mphone" placeholder="05XXXXXXXX" dir="ltr" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>ملاحظات</label>
+      <textarea id="mnote" placeholder="مهتم بمعاينة العقار / الاستفسار عن السعر..."></textarea>
+    </div>
+    <button class="submit-btn" data-hover onclick="sendInquiry()">
+      إرسال الاستفسار عبر واتساب
+      <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg>
+    </button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ========= CUSTOM CURSOR =========
+  (function () {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
+
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+    });
+
+    function loop() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    document.addEventListener('mouseover', (e) => {
+      const t = e.target;
+      if (t.closest && t.closest('[data-hover], a, button')) {
+        document.body.classList.add('cursor-hover');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      const t = e.target;
+      if (t.closest && t.closest('[data-hover], a, button')) {
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+
+    // Hide when leaving window
+    document.addEventListener('mouseleave', () => {
+      dot.style.opacity = ring.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      dot.style.opacity = ring.style.opacity = '1';
+    });
+  })();
+
+  // ========= BG-AWARE CURSOR (cream vs ink) =========
+  (function () {
+    const sections = document.querySelectorAll('section[data-bg], header, footer');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && e.intersectionRatio > 0.45) {
+          if (e.target.dataset.bg === 'cream') {
+            document.body.classList.add('on-cream');
+          } else {
+            document.body.classList.remove('on-cream');
+          }
+        }
+      });
+    }, { threshold: [0.45, 0.6] });
+    sections.forEach((s) => obs.observe(s));
+  })();
+
+  // ========= HEADER SCROLL =========
+  window.addEventListener('scroll', () => {
+    const tb = document.getElementById('topBar');
+    tb.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // ========= CLOCK (Dammam time) =========
+  function updateClock() {
+    const now = new Date();
+    // Riyadh = UTC+3 (Dammam same)
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const dammam = new Date(utc + (3 * 3600000));
+    const h = String(dammam.getHours()).padStart(2, '0');
+    const m = String(dammam.getMinutes()).padStart(2, '0');
+    const el = document.getElementById('clock');
+    if (el) el.innerHTML = `${h}:${m} <span>•</span> الدمام`;
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ========= REVEAL =========
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        revObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => revObs.observe(el));
+
+  // ========= COUNTER =========
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count);
+        const dur = 1800;
+        const start = performance.now();
+        function tick(now) {
+          const t = Math.min(1, (now - start) / dur);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.floor(eased * target);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+        countObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach((el) => countObs.observe(el));
+
+  // ========= MOBILE MENU =========
+  function toggleMobileMenu() {
+    const nav = document.querySelector('.nav');
+    if (nav.style.display === 'flex') {
+      nav.style.display = '';
+    } else {
+      nav.style.display = 'flex';
+      nav.style.position = 'fixed';
+      nav.style.top = '70px';
+      nav.style.right = '0';
+      nav.style.left = '0';
+      nav.style.flexDirection = 'column';
+      nav.style.background = 'rgba(10,14,36,0.98)';
+      nav.style.padding = '24px';
+      nav.style.borderBottom = '1px solid var(--line-dark)';
+    }
+  }
+  window.toggleMobileMenu = toggleMobileMenu;
+
+  // ========= PRODUCTS =========
+  const PRODUCTS = [
+    { id: 'apt-001', cat: 'apt',  catLabel: 'شقة',     status: 'rent', statusLabel: 'للإيجار',
+      title: 'شقة فاخرة — حي الفيصلية',  loc: 'الدمام · الفيصلية',
+      area: '180 م²', rooms: '3 غرف + خادمة', floor: 'الدور الثاني',
+      price: '٤٥,٠٠٠', priceUnit: 'ر.س / سنوياً' },
+    { id: 'apt-002', cat: 'apt',  catLabel: 'شقة',     status: 'sale', statusLabel: 'للبيع',
+      title: 'شقة تمليك — كورنيش الخبر', loc: 'الخبر · الكورنيش',
+      area: '210 م²', rooms: '4 غرف', floor: 'الدور الخامس',
+      price: 'تواصل', priceUnit: 'للسعر' },
+    { id: 'apt-003', cat: 'apt',  catLabel: 'شقة',     status: 'rent', statusLabel: 'للإيجار',
+      title: 'شقة عائلية — حي النور',     loc: 'الدمام · النور',
+      area: '160 م²', rooms: '3 غرف', floor: 'الدور الأول',
+      price: '٣٨,٠٠٠', priceUnit: 'ر.س / سنوياً' },
+    { id: 'apt-004', cat: 'apt',  catLabel: 'شقة',     status: 'new',  statusLabel: 'جديد',
+      title: 'شقق ديلوكس — مشروع الواحة', loc: 'الدمام · الواحة',
+      area: '140 — 200 م²', rooms: 'متعددة', floor: 'مختلفة',
+      price: 'حسب الوحدة', priceUnit: '' },
+
+    { id: 'bld-001', cat: 'bld',  catLabel: 'عمارة',   status: 'sale', statusLabel: 'للبيع',
+      title: 'عمارة استثمارية — حي العزيزية', loc: 'الخبر · العزيزية',
+      area: '850 م²', rooms: '12 شقة', floor: '4 أدوار',
+      price: 'تواصل', priceUnit: 'للسعر' },
+    { id: 'bld-002', cat: 'bld',  catLabel: 'عمارة',   status: 'rent', statusLabel: 'للإيجار',
+      title: 'مجمع تجاري — المريكبات',     loc: 'الدمام · المريكبات',
+      area: '1,200 م²', rooms: '8 محلات', floor: 'دوران',
+      price: 'حسب المحل', priceUnit: '' },
+    { id: 'bld-003', cat: 'bld',  catLabel: 'عمارة',   status: 'sale', statusLabel: 'للبيع',
+      title: 'برج مكتبي — طريق الملك فهد', loc: 'الدمام · طريق الملك فهد',
+      area: '2,400 م²', rooms: '24 مكتب', floor: '8 أدوار',
+      price: 'تواصل', priceUnit: 'للسعر' },
+
+    { id: 'lnd-001', cat: 'land', catLabel: 'أرض',     status: 'sale', statusLabel: 'للبيع',
+      title: 'أرض تجارية — طريق الملك عبدالعزيز', loc: 'الدمام · المركز',
+      area: '1,200 م²', rooms: 'واجهة تجارية', floor: 'زاوية',
+      price: 'تواصل', priceUnit: 'للسعر' },
+    { id: 'lnd-002', cat: 'land', catLabel: 'أرض',     status: 'sale', statusLabel: 'للبيع',
+      title: 'أرض سكنية — حي الشاطئ',     loc: 'الخبر · الشاطئ',
+      area: '600 م²', rooms: 'سكني',       floor: '—',
+      price: 'تواصل', priceUnit: 'للسعر' },
+  ];
+
+  function glyphFor(cat) {
+    if (cat === 'apt') return `
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="14" y="20" width="52" height="50"/>
+        <line x1="14" y1="35" x2="66" y2="35"/>
+        <line x1="14" y1="50" x2="66" y2="50"/>
+        <line x1="40" y1="20" x2="40" y2="70"/>
+        <rect x="36" y="60" width="8" height="10" fill="currentColor" opacity="0.3"/>
+      </svg>`;
+    if (cat === 'bld') return `
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="10" y="14" width="60" height="56"/>
+        <line x1="10" y1="26" x2="70" y2="26"/>
+        <line x1="10" y1="38" x2="70" y2="38"/>
+        <line x1="10" y1="50" x2="70" y2="50"/>
+        <line x1="10" y1="62" x2="70" y2="62"/>
+        <line x1="25" y1="14" x2="25" y2="70"/>
+        <line x1="40" y1="14" x2="40" y2="70"/>
+        <line x1="55" y1="14" x2="55" y2="70"/>
+      </svg>`;
+    return `
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
+        <path d="M10 60 L30 35 L50 50 L70 25 L70 65 L10 65 Z"/>
+        <circle cx="58" cy="22" r="5"/>
+      </svg>`;
+  }
+
+  function badgeClass(status) {
+    if (status === 'sale') return 'sale';
+    if (status === 'rent') return 'rent';
+    return 'new';
+  }
+
+  function renderProducts(filter = 'all') {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = '';
+    const items = filter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.cat === filter);
+    items.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'product-card reveal';
+      card.style.transitionDelay = `${i * 60}ms`;
+      card.innerHTML = `
+        <div class="visual">
+          <div class="glyph">${glyphFor(p.cat)}</div>
+          <div class="badge-row">
+            <span class="badge ${badgeClass(p.status)}">${p.statusLabel}</span>
+            <span class="badge">${p.catLabel}</span>
+          </div>
+          <div class="ph-label">صورة العقار</div>
+        </div>
+        <div class="body">
+          <div class="loc"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1" width="9" height="9" style="display:inline-block;vertical-align:middle;margin-left:4px"><path d="M6 1 L11 6 L6 11 L1 6 Z"/></svg> ${p.loc}</div>
+          <h4>${p.title}</h4>
+          <div class="specs">
+            <div class="s"><strong>${p.area}</strong></div>
+            <div class="s">${p.rooms}</div>
+            <div class="s">${p.floor}</div>
+          </div>
+          <div class="pc-foot">
+            <div class="price">${p.price} <span class="sub">${p.priceUnit || ''}</span></div>
+            <button class="inquire" data-hover data-id="${p.id}" data-title="${p.title}">
+              استفسار <svg class="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" width="14" height="14" style="display:inline-block;vertical-align:middle"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10,6 4,12 10,18"/></svg>
+            </button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+
+      // attach to reveal observer
+      revObs.observe(card);
+    });
+
+    // wire inquiry buttons
+    grid.querySelectorAll('.inquire').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        openModal(btn.dataset.id, btn.dataset.title);
+      });
+    });
+  }
+
+  document.getElementById('productTabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.ptab');
+    if (!btn) return;
+    document.querySelectorAll('.ptab').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.dataset.cat);
+  });
+
+  renderProducts('all');
+
+  // ========= MODAL =========
+  let CURRENT = { id: '', title: '' };
+  function openModal(id, title) {
+    CURRENT = { id, title };
+    document.getElementById('modalTarget').textContent = `${title} · ${id.toUpperCase()}`;
+    document.getElementById('modalBg').classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+  function closeModal() {
+    document.getElementById('modalBg').classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+  document.getElementById('modalBg').addEventListener('click', (e) => {
+    if (e.target.id === 'modalBg') closeModal();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  function sendInquiry() {
+    const name = document.getElementById('mname').value.trim();
+    const phone = document.getElementById('mphone').value.trim();
+    const note = document.getElementById('mnote').value.trim();
+    if (!name || !phone) {
+      alert('الرجاء تعبئة الاسم ورقم الجوال');
+      return;
+    }
+    const text =
+      `*استفسار عقاري — الزامل العقارية*%0A%0A` +
+      `العقار: ${CURRENT.title}%0A` +
+      `الكود: ${CURRENT.id.toUpperCase()}%0A%0A` +
+      `الاسم: ${name}%0A` +
+      `الجوال: ${phone}%0A` +
+      `ملاحظات: ${note || '—'}`;
+    window.open(`https://wa.me/966539515111?text=${text}`, '_blank');
+  }
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+  window.sendInquiry = sendInquiry;
+
+  // ========= CONTACT FORM =========
+  function sendWhatsApp() {
+    const name = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    const service = document.getElementById('fservice').value;
+    const msg = document.getElementById('fmsg').value.trim();
+
+    if (!name || !phone) {
+      alert('الرجاء تعبئة الاسم ورقم الجوال');
+      return;
+    }
+    const text =
+      `*استفسار جديد — الزامل العقارية*%0A%0A` +
+      `الاسم: ${name}%0A` +
+      `الجوال: ${phone}%0A` +
+      `الخدمة: ${service || 'غير محدد'}%0A` +
+      `الرسالة: ${msg || '—'}`;
+    window.open(`https://wa.me/966539515111?text=${text}`, '_blank');
+  }
+  window.sendWhatsApp = sendWhatsApp;
+</script>
+
+</body>
+</html>
